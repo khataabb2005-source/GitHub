@@ -3,188 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نتيجة الشهادة الإعدادية 2026 - محافظة الجيزة</title>
-    
+    <title>جريدة أخبار النتيجة | نتائج الشهادة الإعدادية 2026</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0d1b4a;
-            background-image: linear-gradient(180deg, #0d1b4a 0%, #1a237e 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            color: white;
-        }
-
-        .container { width: 100%; max-width: 400px; padding: 20px; text-align: center; }
+        :root { --news-red: #d90429; --dark-blue: #2b2d42; --light-gray: #f8f9fa; --success-green: #38b000; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--light-gray); color: #333; }
         
-        #resultCard {
-            display: none;
-            background: #ffffff;
-            color: #333;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: right;
-        }
+        .breaking-news { background: var(--news-red); color: white; padding: 10px; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        .news-nav { background: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--news-red); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .news-nav h1 { margin: 0; color: var(--dark-blue); font-size: 1.8rem; }
+        .news-nav span { color: var(--news-red); }
 
-        .card-header {
-            background: #1a237e;
-            color: white;
-            padding: 15px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            border-bottom: 3px solid #ffca28;
-        }
+        .content { max-width: 480px; margin: 20px auto; padding: 0 15px; }
 
-        .card-body { padding: 15px; }
+        /* عداد الزوار */
+        .visitor-counter { background: #fff3f3; color: var(--news-red); padding: 8px; border-radius: 5px; font-size: 0.85rem; margin-bottom: 15px; border: 1px solid #ffcccc; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; }
+        .live-dot { width: 8px; height: 8px; background: var(--news-red); border-radius: 50%; animation: blink 1s infinite; }
+
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        /* صناديق الواجهة */
+        .card { background: white; border-radius: 10px; border: 1px solid #ddd; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .card-header { background: var(--dark-blue); color: white; padding: 15px; text-align: center; font-size: 1.1rem; }
+        .form-body { padding: 25px; text-align: center; }
         
-        .row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
+        input { width: 85%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 15px; text-align: center; font-size: 1rem; }
+        .view-btn { background: var(--news-red); color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-        .row.total {
-            background: #fff9c4;
-            font-weight: bold;
-            padding: 10px;
-            border-radius: 5px;
-            color: #1a237e;
-        }
+        /* النتيجة */
+        #resultCard { display: none; }
+        .result-info { background: var(--dark-blue); color: white; padding: 15px; font-size: 0.9rem; line-height: 1.7; text-align: right; }
+        .data-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
+        .total-box { background: #ffbe0b; font-weight: bold; border-radius: 5px; font-size: 1.2rem; }
 
-        /* تنسيق منطقة الباركود */
-        .qr-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px dashed #ccc;
-        }
-        #qrcode img {
-            width: 80px;
-            height: 80px;
-        }
-        .qr-text {
-            font-size: 10px;
-            color: #777;
-            margin-top: 5px;
-        }
+        /* أخبار متعلقة */
+        .related-section { margin-top: 25px; }
+        .news-item { background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; border: 1px solid #eee; text-decoration: none; color: inherit; }
+        .news-icon { background: var(--light-gray); padding: 10px; border-radius: 5px; font-size: 1.2rem; }
 
-        .btn-group { padding: 10px; display: flex; flex-direction: column; gap: 10px; }
-        
-        .print-btn {
-            background-color: #2e7d32;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .search-box {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        input {
-            width: 85%;
-            padding: 12px;
-            border-radius: 25px;
-            border: none;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .submit-btn {
-            background: #ffca28;
-            color: #0d1b4a;
-            border: none;
-            padding: 10px 35px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        @media print {
-            body { background: white !important; }
-            #searchSection, .print-btn, .new-search-btn { display: none !important; }
-            #resultCard { display: block !important; box-shadow: none !important; width: 100%; border: 1px solid #000; }
-        }
+        @media print { .no-print { display: none !important; } #resultCard { display: block !important; border: 1px solid #000; } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="searchSection">
-        <h2 style="color: #ffca28;">بوابة نتائج الجيزة 2026</h2>
-        <div class="search-box">
-            <p>أدخل رقم الجلوس للاستعلام</p>
-            <input type="number" id="seatNumInput" placeholder="205029">
-            <br>
-            <button class="submit-btn" onclick="checkResult()">عرض النتيجة</button>
+    <div class="breaking-news">عاجل: إعلان نتائج الشهادة الإعدادية بمحافظة الجيزة لعام 2026 عبر "الجريدة"</div>
+
+    <nav class="news-nav">
+        <h1>الـ<span>جـريدة</span> التعليمية</h1>
+    </nav>
+
+    <div class="content">
+        <div class="visitor-counter no-print">
+            <span class="live-dot"></span>
+            يتابع النتيجة الآن: 250,482 شخص عبر الموقع
+        </div>
+
+        <div id="searchBox" class="card no-print">
+            <div class="card-header">بوابة النتائج الرسمية</div>
+            <div class="form-body">
+                <input type="number" id="seatInput" placeholder="أدخل رقم الجلوس 205029">
+                <button class="view-btn" onclick="showResult()">عرض النتيجة الآن</button>
+                <p style="font-size: 11px; color: #888; margin-top: 10px;">* تم تحديث البيانات منذ دقيقتين</p>
+            </div>
+        </div>
+
+        <div id="resultCard" class="card">
+            <div class="result-info">
+                <b>الطالب:</b> محمد حازم عبد الرازق عبدالواحد <br>
+                <b>رقم الجلوس:</b> 205029 | <b>الإدارة:</b> البدرشين
+            </div>
+            <div style="padding: 15px;">
+                <div class="data-row total-box"><span>المجموع الكلي:</span> <span>106</span></div>
+                <div class="data-row"><span>اللغة العربية:</span> <span>32</span></div>
+                <div class="data-row"><span>الرياضيات:</span> <span>26</span></div>
+                <div class="data-row"><span>اللغة الإنجليزية:</span> <span>25</span></div>
+                <div class="data-row"><span>العلوم:</span> <span>13</span></div>
+                <div class="data-row"><span>الدراسات الاجتماعية:</span> <span>10</span></div>
+                
+                <div style="text-align: center; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 10px;">
+                    <div id="qrcode" style="display:inline-block"></div>
+                    <p style="font-size: 10px; color: #777;">موثق إلكترونياً © 2026</p>
+                </div>
+
+                <div class="no-print" style="margin-top: 15px;">
+                    <button class="view-btn" style="background: var(--success-green);" onclick="window.print()">تحميل الشهادة PDF</button>
+                    <button onclick="location.reload()" style="width: 100%; background: none; border: 1px solid #ccc; padding: 10px; margin-top: 10px; cursor: pointer; border-radius: 5px;">بحث جديد</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="related-section no-print">
+            <h4 style="border-right: 4px solid var(--news-red); padding-right: 10px;">أخبار تهمك</h4>
+            <div class="news-item">
+                <div class="news-icon">📅</div>
+                <div style="font-size: 0.85rem; font-weight: bold;">فتح باب التظلمات لعام 2026 الأسبوع القادم</div>
+            </div>
+            <div class="news-item">
+                <div class="news-icon">📉</div>
+                <div style="font-size: 0.85rem; font-weight: bold;">توقعات تنسيق الثانوية العامة بعد إعلان النتيجة</div>
+            </div>
         </div>
     </div>
 
-    <div id="resultCard">
-        <div class="card-header">
-            <b>الاسم:</b> محمد حازم عبد الرازق عبدالواحد <br>
-            <b>رقم الجلوس:</b> 205029 <br>
-            <b>المدرسة:</b> الشهداء بنين الاعدادية <br>
-            <b>الإدارة:</b> البدرشين - الجيزة
-        </div>
-        <div class="card-body">
-            <div class="row total">
-                <span>المجموع الكلي:</span>
-                <span>106</span>
-            </div>
-            <div class="row"><span>لغة عربية:</span><span>32</span></div>
-            <div class="row"><span>رياضيات:</span><span>26</span></div>
-            <div class="row"><span>لغة إنجليزية:</span><span>25</span></div>
-            <div class="row"><span>علوم:</span><span>13</span></div>
-            <div class="row"><span>دراسات اجتماعية:</span><span>10</span></div>
-            
-            <div class="qr-section">
-                <div id="qrcode"></div>
-                <div class="qr-text">كود التحقق من النتيجة أصلي وموثق © 2026</div>
-            </div>
-
-            <div class="btn-group">
-                <button class="print-btn" onclick="window.print()">🖨️ طباعة الشهادة / PDF</button>
-                <button onclick="location.reload()" style="background:none; border:none; color:#1a237e; cursor:pointer;">بحث جديد</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function checkResult() {
-        var input = document.getElementById("seatNumInput").value;
-        if (input === "205029") {
-            document.getElementById("searchSection").style.display = "none";
-            document.getElementById("resultCard").style.display = "block";
-            
-            // توليد الباركود تلقائياً بناءً على لينك الموقع الحالي
-            new QRCode(document.getElementById("qrcode"), {
-                text: window.location.href,
-                width: 80,
-                height: 80
-            });
-        } else {
-            alert("عفواً، رقم الجلوس غير صحيح.");
+    <script>
+        function showResult() {
+            if(document.getElementById('seatInput').value === "205029") {
+                document.getElementById('searchBox').style.display = 'none';
+                document.getElementById('resultCard').style.display = 'block';
+                new QRCode(document.getElementById("qrcode"), { text: window.location.href, width: 80, height: 80 });
+            } else { alert("رقم الجلوس غير صحيح."); }
         }
-    }
-</script>
-
+    </script>
 </body>
 </html>
